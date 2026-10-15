@@ -1,0 +1,44 @@
+name: Formula
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: formula-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: install, test and audit (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    env:
+      HOMEBREW_NO_AUTO_UPDATE: '1'
+      HOMEBREW_NO_INSTALL_CLEANUP: '1'
+      HOMEBREW_NO_ANALYTICS: '1'
+    steps:
+      # Links this checkout into Homebrew as the rokas-tarasevicius/tap tap.
+      - name: Set up Homebrew
+        uses: Homebrew/actions/setup-homebrew@f9676f1ffe2e1a720f81b2c54c51cfb99915ec14 # main, 2026-10-14
+
+      - name: Style
+        run: brew style rokas-tarasevicius/tap
+
+      - name: Install
+        run: brew install --formula rokas-tarasevicius/tap/session-analytics
+
+      - name: Test
+        run: brew test rokas-tarasevicius/tap/session-analytics
+
+      - name: Audit
+        run: brew audit --strict --online --formula rokas-tarasevicius/tap/session-analytics
