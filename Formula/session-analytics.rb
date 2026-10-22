@@ -3,8 +3,8 @@
 class SessionAnalytics < Formula
   desc "Content-free analytics for local coding-agent sessions"
   homepage "https://github.com/rokas-tarasevicius/session-analytics"
-  url "https://github.com/rokas-tarasevicius/session-analytics/releases/download/v0.12.0/session-analytics-0.12.0.tgz"
-  sha256 "1dfd8c3809018c95000d42c6eb868df301c9a0bf133af02f1bf5022474b6583e"
+  url "https://github.com/rokas-tarasevicius/session-analytics/releases/download/v0.12.1/session-analytics-0.12.1.tgz"
+  sha256 "1ba0d59906b28ced9a13567dc502da59d3a88ce80d025534d09b6460727775d8"
   license "MIT"
 
   depends_on "node"
